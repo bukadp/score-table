@@ -1,12 +1,65 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {addTeamAC, setTeamAC, setPlayedTeamsAC} from "../redux/data-reducer";
 
 function Input(props) {
+    const [team, setTeam] = useState('')
+    const teamData = useSelector(state => state.scoreTableData.teamData);
+    const gamesData = useSelector(state => state.scoreTableData.gamesData);
+
+    const dispatch = useDispatch();
+
+    const addTeam = (e) => {
+        e.preventDefault();
+        const newTeam = {
+            place: (teamData.length) + 1,
+            team: team,
+            played: 0,
+            win: 0,
+            draw: 0,
+            lost: 0,
+            points: 0,
+            playedTeams: [],
+        }
+        dispatch(addTeamAC(newTeam));
+        dispatch(setPlayedTeamsAC(team));
+        setTeam ('');
+    }
+
+    useEffect(() => {
+        setGames()
+    }, [teamData])
+
+    const setGames = () => {
+        for (let i = 0; i < teamData.length; i++) {
+            for (let j = 0; j < teamData.length; j++) {
+                debugger
+                if (teamData[i].team !== teamData[j].team && !teamData[i].playedTeams.includes(teamData[j].team)) {
+                    let newGame = {
+                        id: gamesData.length + 1,
+                        teamOne: teamData[i].team,
+                        teamTwo: teamData[j].team,
+                        interimScoreTeamOne: null,
+                        interimScoreTeamTwo: null,
+                        scoreTeamOne: null,
+                        scoreTeamTwo: null,
+                    }
+                    dispatch(setTeamAC(newGame));
+                }
+            }
+        }
+    }
 
     return (
         <div>
-            <form className="add-team">
-                <input className="name" type="text" placeholder="New team"/>
-                <button className='btn' type="submit">Add</button>
+            <form className="add-team" onSubmit={addTeam}>
+                <input
+                    className="name"
+                    type="text"
+                    placeholder="New team"
+                    value={team}
+                    onChange={(e) => setTeam(e.target.value)}/>
+                <button type="submit">Add</button>
             </form>
         </div>
     );

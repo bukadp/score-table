@@ -2,7 +2,7 @@ import React from "react";
 import Input from "./input";
 import TableContainer from "./tableContainer";
 import Games from "./games";
-import { Col, Row } from 'antd';
+import {Col, Row} from 'antd';
 
 function ScoreTable() {
 
@@ -15,7 +15,7 @@ function ScoreTable() {
                     <Input/>
                 </Col>
             </Row>
-            <Row >
+            <Row>
                 <Col offset={4}></Col>
                 <Col span={12}><TableContainer/></Col>
                 <Col span={4}>
