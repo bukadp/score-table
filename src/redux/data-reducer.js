@@ -11,39 +11,9 @@ const SET_DRAW_RESULT = 'SET_DRAW_RESULT';
 const SET_PLACES = 'SET_PLACES';
 
 const initialState = {
-    teamData: [
-        /*        {
-                    place: 1,
-                    team: 'England',
-                    played: 0,
-                    win: 0,
-                    draw: 0,
-                    lost: 0,
-                    points: 0,
-                    playedTeams: [],
-                }*/
-    ],
+    teamData: [],
 
-    gamesData: [
-        /*        {
-                    id: 1,
-                    teamOne: 'Ukraine',
-                    teamTwo: 'England',
-                    scoreTeamOne: 3,
-                    scoreTeamTwo: 0,
-                    interimScoreTeamOne: null,
-                    interimScoreTeamTwo: null,
-                },
-                {
-                    id: 2,
-                    teamOne: 'Ukraine',
-                    teamTwo: 'NEW',
-                    scoreTeamOne: 3,
-                    scoreTeamTwo: 0,
-                    interimScoreTeamOne: null,
-                    interimScoreTeamTwo: null,
-                }*/
-    ]
+    gamesData: []
 }
 
 const dataReducer = (state = initialState, action) => {
@@ -153,7 +123,7 @@ const dataReducer = (state = initialState, action) => {
                     })
             };
 
-        case SET_PLACES: //TODO correct sort
+        case SET_PLACES:
             return {
                 ...state,
                 teamData: state.teamData
@@ -166,7 +136,7 @@ const dataReducer = (state = initialState, action) => {
                             return 1
                         return 0
                     }).map((team, index) => {
-                        team.place = index+1;
+                        team.place = index + 1;
                         return team
                     })
             }

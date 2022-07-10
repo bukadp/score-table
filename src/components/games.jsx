@@ -40,13 +40,12 @@ function Games() {
     }
 
     return (
-        //TODO align center item in component games
         <div>
             <ul>
                 {gamesData.map((item) => {
                     return <li key={item.id}>
                         <span>{`${item.teamOne} `}</span>
-                        <span>{(item.scoreTeamOne !== null)
+                        <span>{(item.scoreTeamOne !== '')
                             ? `${item.scoreTeamOne} `
                             : <input className="score"
                                      type="number"
@@ -59,7 +58,7 @@ function Games() {
                             />
                         }</span>
                         <span> : </span>
-                        <span>{(item.scoreTeamTwo !== null)
+                        <span>{(item.scoreTeamTwo !== '')
                             ? `${item.scoreTeamTwo} `
                             : <input className="score"
                                      type="number"
@@ -73,7 +72,7 @@ function Games() {
                         <span>{` ${item.teamTwo}`}</span>
                         <button
                             type="button"
-                            disabled={item.scoreTeamTwo !== null}
+                            disabled={item.scoreTeamTwo !== ''}
                             onClick={() => gamesResult(
                                 item.id,
                                 item.teamOne,
@@ -88,7 +87,6 @@ function Games() {
                 }
             </ul>
         </div>
-
     );
 }
 

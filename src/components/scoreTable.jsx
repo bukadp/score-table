@@ -5,10 +5,9 @@ import Games from "./games";
 import {Col, Row} from 'antd';
 import {useSelector} from "react-redux";
 
-
 function ScoreTable() {
     const teamData = useSelector(state => state.scoreTableData.teamData);
-
+    const gamesData = useSelector(state => state.scoreTableData.gamesData);
 
     return (
         <div>
@@ -21,8 +20,7 @@ function ScoreTable() {
                 <Col offset={2}></Col>
                 <Col span={12}><TableContainer
                     teamData={teamData}
-
-                /></Col>
+                    gamesData={gamesData}/></Col>
                 <Col span={10}> <Games/> </Col>
             </Row>
         </div>

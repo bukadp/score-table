@@ -2,8 +2,6 @@ import React from "react";
 import {Table} from 'antd';
 import "antd/dist/antd.css";
 
-
-
 function TableContainer(props) {
 
     const columns = [
@@ -41,21 +39,13 @@ function TableContainer(props) {
             title: 'Points',
             key: 'points',
             dataIndex: 'points',
-/*            defaultSortOrder: 'descend',
-            sorter: (a, b) => a.points - b.points,*/
         },
     ]
-
-    const onChange = (sorter) => {
-        console.log('params', sorter);
-    };
-
     return (
         <div>
             <Table columns={columns}
                    dataSource={props.teamData}
                    pagination={false}
-                   onChange={onChange}
                    bordered/>
         </div>
     )

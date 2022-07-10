@@ -21,7 +21,7 @@ function Input() {
         }
         dispatch(addTeamAC(newTeam));
 
-        setTeam ('');
+        setTeam('');
     }
 
     useEffect(() => {
@@ -33,15 +33,15 @@ function Input() {
             for (let j = 0; j < teamData.length; j++) {
                 if (teamData[i].team !== teamData[j].team
                     && !teamData[i].playedTeams.includes(teamData[j].team)
-                    ) {
+                ) {
                     let newGame = {
                         id: teamData[i].team + teamData[j].team,
                         teamOne: teamData[i].team,
                         teamTwo: teamData[j].team,
-                        interimScoreTeamOne: null,
-                        interimScoreTeamTwo: null,
-                        scoreTeamOne: null,
-                        scoreTeamTwo: null,
+                        interimScoreTeamOne: '',
+                        interimScoreTeamTwo: '',
+                        scoreTeamOne: '',
+                        scoreTeamTwo: '',
                     }
                     dispatch(setGameAC(newGame));
 
