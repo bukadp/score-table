@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addTeamAC, setTeamAC, setPlayedTeamsAC} from "../redux/data-reducer";
+import {addTeamAC, setGameAC, setPlayedTeamsAC} from "../redux/data-reducer";
 
 function Input(props) {
     const [team, setTeam] = useState('')
@@ -22,7 +22,7 @@ function Input(props) {
             playedTeams: [],
         }
         dispatch(addTeamAC(newTeam));
-        dispatch(setPlayedTeamsAC(team));
+
         setTeam ('');
     }
 
@@ -31,12 +31,14 @@ function Input(props) {
     }, [teamData])
 
     const setGames = () => {
+
         for (let i = 0; i < teamData.length; i++) {
             for (let j = 0; j < teamData.length; j++) {
-                debugger
-                if (teamData[i].team !== teamData[j].team && !teamData[i].playedTeams.includes(teamData[j].team)) {
+                if (teamData[i].team !== teamData[j].team
+                    && !teamData[i].playedTeams.includes(teamData[j].team)
+                    ) {
                     let newGame = {
-                        id: gamesData.length + 1,
+                        id: teamData[i].team + teamData[j].team,
                         teamOne: teamData[i].team,
                         teamTwo: teamData[j].team,
                         interimScoreTeamOne: null,
@@ -44,8 +46,11 @@ function Input(props) {
                         scoreTeamOne: null,
                         scoreTeamTwo: null,
                     }
-                    dispatch(setTeamAC(newGame));
+                    dispatch(setGameAC(newGame));
+                    dispatch(setPlayedTeamsAC(teamData[i].team));
+                    dispatch(setPlayedTeamsAC(teamData[j].team));
                 }
+
             }
         }
     }

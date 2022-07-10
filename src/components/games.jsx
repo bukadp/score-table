@@ -1,23 +1,40 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addTeamAC, updateTeamOneScoreAC} from "../redux/data-reducer";
+import {
+    addTeamAC, firstTeamWin,
+    setTeamOneScoreAC,
+    setTeamTwoScoreAC,
+    updateTeamOneScoreAC,
+    updateTeamTwoScoreAC
+} from "../redux/data-reducer";
 
 function Games(props) {
     const gamesData = useSelector(state => state.scoreTableData.gamesData);
     const dispatch = useDispatch();
 
-    /*    const gamesResult = (teamOne, scoreTeamOne, teamTwo, scoreTeamTwo) => {
-            if (scoreTeamOne > scoreTeamTwo){
-
-            }
-        }*/
+    const gamesResult = (id, teamOne, scoreTeamOne, teamTwo, scoreTeamTwo) => {
+        if (scoreTeamOne > scoreTeamTwo) {
+            dispatch(firstTeamWin(teamOne, teamTwo))
+        }
+    }
 
     const onScoreChangeTeamOne = (id, scoreTeamOne) => {
         dispatch(updateTeamOneScoreAC(id, scoreTeamOne));
     }
 
 
-    const setScoreTeamOne = () => {
+    const setScore = (id) => {
+        dispatch(setTeamOneScoreAC(id))
+        dispatch(setTeamTwoScoreAC(id))
+
+    }
+
+    const onScoreChangeTeamTwo = (id, scoreTeamTwo) => {
+        dispatch(updateTeamTwoScoreAC(id, scoreTeamTwo));
+    }
+
+
+    const setScoreTeamTwo = () => {
     }
 
 
@@ -32,23 +49,44 @@ function Games(props) {
                             ? `${item.scoreTeamOne} `
                             : <input className="score"
                                      type="number"
+                                     min="0"
+                                     autoFocus={true}
+                                //onBlur={setScoreTeamOne}
                                      onChange={(e) => {
                                          onScoreChangeTeamOne(item.id, e.target.value)
                                      }}
-                                     onSubmit={setScoreTeamOne}
-                                     /*value={item.interimScoreTeamOne}*/
+                                //onSubmit={setScoreTeamOne}
+                                /*value={item.interimScoreTeamOne}*/
                             />
                         }</span>
                         <span> : </span>
                         <span>{(item.scoreTeamTwo !== null)
                             ? `${item.scoreTeamTwo} `
-                            : <input className="score" type="number"/>
+                            : <input className="score"
+                                     type="number"
+                                     min="0"
+                                     onChange={(e) => {
+                                         onScoreChangeTeamTwo(item.id, e.target.value)
+                                     }}
+                                     onSubmit={setScoreTeamTwo}
+                            />
                         }</span>
                         <span>{` ${item.teamTwo}`}</span>
+                        <button
+                            type="button"
+                            onClick={() => setScore(
+                                item.id,
+                                item.teamOne,
+                                item.scoreTeamOne,
+                                item.teamTwo,
+                                item.scoreTeamTwo
+                            )}
+                        >set result
+                        </button>
                     </li>
                 })
                 }
-{/*                <li>
+                {/*                <li>
                     <span>{`Greece `}</span>
                     <input className="score" type="number"/>
                     <span> : </span>

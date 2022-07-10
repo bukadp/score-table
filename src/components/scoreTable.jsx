@@ -11,14 +11,14 @@ function ScoreTable() {
 
         <div>
             <Row>
-                <Col span={16} offset={4}>
+                <Col span={20} offset={2}>
                     <Input/>
                 </Col>
             </Row>
             <Row>
-                <Col offset={4}></Col>
-                <Col span={12}><TableContainer/></Col>
-                <Col span={4}>
+                <Col offset={2}></Col>
+                <Col span={10}><TableContainer/></Col>
+                <Col span={10}>
                     <Games/>
                 </Col>
             </Row>
