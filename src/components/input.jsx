@@ -5,8 +5,6 @@ import {addTeamAC, setGameAC, setPlayedTeamsAC} from "../redux/data-reducer";
 function Input() {
     const [team, setTeam] = useState('')
     const teamData = useSelector(state => state.scoreTableData.teamData);
-    const gamesData = useSelector(state => state.scoreTableData.gamesData);
-
     const dispatch = useDispatch();
 
     const addTeam = (e) => {
@@ -46,6 +44,7 @@ function Input() {
                         scoreTeamTwo: null,
                     }
                     dispatch(setGameAC(newGame));
+
                     dispatch(setPlayedTeamsAC(teamData[i].team));
                     dispatch(setPlayedTeamsAC(teamData[j].team));
                 }
@@ -63,7 +62,7 @@ function Input() {
                     placeholder="New team"
                     value={team}
                     onChange={(e) => setTeam(e.target.value)}/>
-                <button type="submit">Add</button>
+                <button type="submit" className="btn">Add</button>
             </form>
         </div>
     );

@@ -1,11 +1,10 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    drawResult, setTeamWin, setTeamLose,
     setTeamOneScoreAC,
     setTeamTwoScoreAC,
     updateTeamOneScoreAC,
-    updateTeamTwoScoreAC
+    updateTeamTwoScoreAC, setPlacesAC, drawResultAC, setTeamLoseAC, setTeamWinAC
 } from "../redux/data-reducer";
 
 function Games() {
@@ -22,19 +21,18 @@ function Games() {
 
         switch (true) {
             case (scoreTeamOne > scoreTeamTwo):
-                dispatch(setTeamWin(teamOne))
-                dispatch(setTeamLose(teamTwo))
+                dispatch(setTeamWinAC(teamOne))
+                dispatch(setTeamLoseAC(teamTwo))
                 break;
-
             case (scoreTeamOne < scoreTeamTwo):
-                dispatch(setTeamWin(teamTwo))
-                dispatch(setTeamLose(teamOne))
+                dispatch(setTeamWinAC(teamTwo))
+                dispatch(setTeamLoseAC(teamOne))
                 break;
             default:
-                dispatch(drawResult(teamOne))
-                dispatch(drawResult(teamTwo))
-
+                dispatch(drawResultAC(teamOne))
+                dispatch(drawResultAC(teamTwo))
         }
+        dispatch(setPlacesAC())
     }
 
     const onScoreChangeTeamTwo = (id, scoreTeamTwo) => {

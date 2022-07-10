@@ -8,41 +8,41 @@ const SET_TEAM_TWO_SCORE = 'SET_TEAM_TWO_SCORE';
 const SET_TEAM_WIN = 'SET_TEAM_WIN';
 const SET_TEAM_LOSE = 'SET_TEAM_LOSE';
 const SET_DRAW_RESULT = 'SET_DRAW_RESULT';
-
+const SET_PLACES = 'SET_PLACES';
 
 const initialState = {
     teamData: [
-/*        {
-            place: 1,
-            team: 'England',
-            played: 0,
-            win: 0,
-            draw: 0,
-            lost: 0,
-            points: 0,
-            playedTeams: [],
-        }*/
+        /*        {
+                    place: 1,
+                    team: 'England',
+                    played: 0,
+                    win: 0,
+                    draw: 0,
+                    lost: 0,
+                    points: 0,
+                    playedTeams: [],
+                }*/
     ],
 
     gamesData: [
-/*        {
-            id: 1,
-            teamOne: 'Ukraine',
-            teamTwo: 'England',
-            scoreTeamOne: 3,
-            scoreTeamTwo: 0,
-            interimScoreTeamOne: null,
-            interimScoreTeamTwo: null,
-        },
-        {
-            id: 2,
-            teamOne: 'Ukraine',
-            teamTwo: 'NEW',
-            scoreTeamOne: 3,
-            scoreTeamTwo: 0,
-            interimScoreTeamOne: null,
-            interimScoreTeamTwo: null,
-        }*/
+        /*        {
+                    id: 1,
+                    teamOne: 'Ukraine',
+                    teamTwo: 'England',
+                    scoreTeamOne: 3,
+                    scoreTeamTwo: 0,
+                    interimScoreTeamOne: null,
+                    interimScoreTeamTwo: null,
+                },
+                {
+                    id: 2,
+                    teamOne: 'Ukraine',
+                    teamTwo: 'NEW',
+                    scoreTeamOne: 3,
+                    scoreTeamTwo: 0,
+                    interimScoreTeamOne: null,
+                    interimScoreTeamTwo: null,
+                }*/
     ]
 }
 
@@ -65,6 +65,7 @@ const dataReducer = (state = initialState, action) => {
                         return game
                     })
             };
+
         case UPDATE_TEAM_TWO_SCORE:
             return {
                 ...state,
@@ -77,7 +78,6 @@ const dataReducer = (state = initialState, action) => {
                     })
             };
 
-
         case SET_TEAM_ONE_SCORE:
             return {
                 ...state,
@@ -89,6 +89,7 @@ const dataReducer = (state = initialState, action) => {
                         return game
                     })
             };
+
         case SET_TEAM_TWO_SCORE:
             return {
                 ...state,
@@ -104,9 +105,9 @@ const dataReducer = (state = initialState, action) => {
         case SET_PLAYED_TEAMS:
             return {
                 ...state,
-                teamData: state.teamData.map(object => {
-                    object.playedTeams = object.playedTeams.concat([action.payload]);
-                    return object
+                teamData: state.teamData.map(team => {
+                    team.playedTeams = team.playedTeams.concat([action.payload]);
+                    return team
                 })
 
             };
@@ -125,7 +126,6 @@ const dataReducer = (state = initialState, action) => {
                     })
             };
 
-
         case SET_TEAM_LOSE:
             return {
                 ...state,
@@ -138,7 +138,8 @@ const dataReducer = (state = initialState, action) => {
                         return team
                     })
             };
-            case SET_DRAW_RESULT:
+
+        case SET_DRAW_RESULT:
             return {
                 ...state,
                 teamData: state.teamData
@@ -152,6 +153,23 @@ const dataReducer = (state = initialState, action) => {
                     })
             };
 
+        case SET_PLACES: //TODO correct sort
+            return {
+                ...state,
+                teamData: state.teamData
+                    .slice().sort(function (a, b) {
+                        let nameA = a.points,
+                            nameB = b.points
+                        if (nameA > nameB)
+                            return -1
+                        if (nameA < nameB)
+                            return 1
+                        return 0
+                    }).map((team, index) => {
+                        team.place = index+1;
+                        return team
+                    })
+            }
         default:
             return state;
     }
@@ -175,11 +193,9 @@ export const updateTeamTwoScoreAC = (id, score) => ({
 
 export const setTeamOneScoreAC = (payload) => ({type: SET_TEAM_ONE_SCORE, payload});
 export const setTeamTwoScoreAC = (payload) => ({type: SET_TEAM_TWO_SCORE, payload});
-
-export const setTeamWin = (payload) => ({type: SET_TEAM_WIN, payload});
-export const setTeamLose = (payload) => ({type: SET_TEAM_LOSE, payload});
-export const drawResult = (payload) => ({type: SET_DRAW_RESULT, payload});
-
-
+export const setTeamWinAC = (payload) => ({type: SET_TEAM_WIN, payload});
+export const setTeamLoseAC = (payload) => ({type: SET_TEAM_LOSE, payload});
+export const drawResultAC = (payload) => ({type: SET_DRAW_RESULT, payload});
+export const setPlacesAC = () => ({type: SET_PLACES});
 
 export default dataReducer;

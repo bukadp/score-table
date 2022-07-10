@@ -1,19 +1,10 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Table} from 'antd';
 import "antd/dist/antd.css";
-import {useSelector} from "react-redux";
 
 
 
 function TableContainer(props) {
-
-    const render = () => {
-console.log('render')
-    }
-    useEffect(() => {
-        render()
-    }, [props.teamData])
-
 
     const columns = [
         {
@@ -50,20 +41,22 @@ console.log('render')
             title: 'Points',
             key: 'points',
             dataIndex: 'points',
-            defaultSortOrder: 'descend',
-            sorter: (a, b) => a.points - b.points,
+/*            defaultSortOrder: 'descend',
+            sorter: (a, b) => a.points - b.points,*/
         },
     ]
 
     const onChange = (sorter) => {
         console.log('params', sorter);
     };
+
     return (
         <div>
             <Table columns={columns}
                    dataSource={props.teamData}
                    pagination={false}
-                   onChange={onChange}/>
+                   onChange={onChange}
+                   bordered/>
         </div>
     )
 }
