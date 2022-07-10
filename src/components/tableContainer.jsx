@@ -15,7 +15,6 @@ console.log('render')
     }, [props.teamData])
 
 
-
     const columns = [
         {
             title: 'Place',
@@ -51,14 +50,20 @@ console.log('render')
             title: 'Points',
             key: 'points',
             dataIndex: 'points',
+            defaultSortOrder: 'descend',
+            sorter: (a, b) => a.points - b.points,
         },
     ]
+
+    const onChange = (sorter) => {
+        console.log('params', sorter);
+    };
     return (
         <div>
             <Table columns={columns}
                    dataSource={props.teamData}
                    pagination={false}
-                   onChange={props.teamData}/>
+                   onChange={onChange}/>
         </div>
     )
 }

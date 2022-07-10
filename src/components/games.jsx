@@ -75,7 +75,7 @@ function Games() {
                         <span>{` ${item.teamTwo}`}</span>
                         <button
                             type="button"
-                            disabled={item.scoreTeamTwo}
+                            disabled={item.scoreTeamTwo !== null}
                             onClick={() => gamesResult(
                                 item.id,
                                 item.teamOne,

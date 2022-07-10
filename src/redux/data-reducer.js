@@ -7,7 +7,8 @@ const SET_TEAM_ONE_SCORE = 'SET_TEAM_ONE_SCORE';
 const SET_TEAM_TWO_SCORE = 'SET_TEAM_TWO_SCORE';
 const SET_TEAM_WIN = 'SET_TEAM_WIN';
 const SET_TEAM_LOSE = 'SET_TEAM_LOSE';
-const SET_DRAW_RESULT = 'SET_DRAW_RESULT'
+const SET_DRAW_RESULT = 'SET_DRAW_RESULT';
+
 
 const initialState = {
     teamData: [
