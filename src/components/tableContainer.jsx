@@ -1,12 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Table} from 'antd';
 import "antd/dist/antd.css";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
+
 
 
 function TableContainer(props) {
-    const teamData = useSelector(state => state.scoreTableData.teamData);
-    const dispatch = useDispatch();
+
+    const render = () => {
+console.log('render')
+    }
+    useEffect(() => {
+        render()
+    }, [props.teamData])
 
 
 
@@ -49,7 +55,10 @@ function TableContainer(props) {
     ]
     return (
         <div>
-            <Table columns={columns} dataSource={teamData} pagination={false} />
+            <Table columns={columns}
+                   dataSource={props.teamData}
+                   pagination={false}
+                   onChange={props.teamData}/>
         </div>
     )
 }

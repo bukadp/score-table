@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addTeamAC, setGameAC, setPlayedTeamsAC} from "../redux/data-reducer";
 
-function Input(props) {
+function Input() {
     const [team, setTeam] = useState('')
     const teamData = useSelector(state => state.scoreTableData.teamData);
     const gamesData = useSelector(state => state.scoreTableData.gamesData);
@@ -31,7 +31,6 @@ function Input(props) {
     }, [teamData])
 
     const setGames = () => {
-
         for (let i = 0; i < teamData.length; i++) {
             for (let j = 0; j < teamData.length; j++) {
                 if (teamData[i].team !== teamData[j].team

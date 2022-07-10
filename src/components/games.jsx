@@ -1,42 +1,45 @@
-import React, {useState} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    addTeamAC, firstTeamWin,
+    drawResult, setTeamWin, setTeamLose,
     setTeamOneScoreAC,
     setTeamTwoScoreAC,
     updateTeamOneScoreAC,
     updateTeamTwoScoreAC
 } from "../redux/data-reducer";
 
-function Games(props) {
+function Games() {
     const gamesData = useSelector(state => state.scoreTableData.gamesData);
     const dispatch = useDispatch();
-
-    const gamesResult = (id, teamOne, scoreTeamOne, teamTwo, scoreTeamTwo) => {
-        if (scoreTeamOne > scoreTeamTwo) {
-            dispatch(firstTeamWin(teamOne, teamTwo))
-        }
-    }
 
     const onScoreChangeTeamOne = (id, scoreTeamOne) => {
         dispatch(updateTeamOneScoreAC(id, scoreTeamOne));
     }
 
+    const gamesResult = (id, teamOne, scoreTeamOne, teamTwo, scoreTeamTwo) => {
+        dispatch(setTeamOneScoreAC(id));
+        dispatch(setTeamTwoScoreAC(id));
 
-    const setScore = (id) => {
-        dispatch(setTeamOneScoreAC(id))
-        dispatch(setTeamTwoScoreAC(id))
+        switch (true) {
+            case (scoreTeamOne > scoreTeamTwo):
+                dispatch(setTeamWin(teamOne))
+                dispatch(setTeamLose(teamTwo))
+                break;
 
+            case (scoreTeamOne < scoreTeamTwo):
+                dispatch(setTeamWin(teamTwo))
+                dispatch(setTeamLose(teamOne))
+                break;
+            default:
+                dispatch(drawResult(teamOne))
+                dispatch(drawResult(teamTwo))
+
+        }
     }
 
     const onScoreChangeTeamTwo = (id, scoreTeamTwo) => {
         dispatch(updateTeamTwoScoreAC(id, scoreTeamTwo));
     }
-
-
-    const setScoreTeamTwo = () => {
-    }
-
 
     return (
         //TODO align center item in component games
@@ -51,12 +54,10 @@ function Games(props) {
                                      type="number"
                                      min="0"
                                      autoFocus={true}
-                                //onBlur={setScoreTeamOne}
                                      onChange={(e) => {
                                          onScoreChangeTeamOne(item.id, e.target.value)
                                      }}
-                                //onSubmit={setScoreTeamOne}
-                                /*value={item.interimScoreTeamOne}*/
+                                     value={item.interimScoreTeamOne}
                             />
                         }</span>
                         <span> : </span>
@@ -68,31 +69,25 @@ function Games(props) {
                                      onChange={(e) => {
                                          onScoreChangeTeamTwo(item.id, e.target.value)
                                      }}
-                                     onSubmit={setScoreTeamTwo}
+                                     value={item.interimScoreTeamTwo}
                             />
                         }</span>
                         <span>{` ${item.teamTwo}`}</span>
                         <button
                             type="button"
-                            onClick={() => setScore(
+                            disabled={item.scoreTeamTwo}
+                            onClick={() => gamesResult(
                                 item.id,
                                 item.teamOne,
-                                item.scoreTeamOne,
+                                item.interimScoreTeamOne,
                                 item.teamTwo,
-                                item.scoreTeamTwo
+                                item.interimScoreTeamTwo,
                             )}
                         >set result
                         </button>
                     </li>
                 })
                 }
-                {/*                <li>
-                    <span>{`Greece `}</span>
-                    <input className="score" type="number"/>
-                    <span> : </span>
-                    <input className="score" type="number"/>
-                    <span>{` Greece`}</span>
-                </li>*/}
             </ul>
         </div>
 

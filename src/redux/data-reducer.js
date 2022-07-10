@@ -5,11 +5,13 @@ const UPDATE_TEAM_ONE_SCORE = 'UPDATE_TEAM_ONE_SCORE';
 const UPDATE_TEAM_TWO_SCORE = 'UPDATE_TEAM_TWO_SCORE';
 const SET_TEAM_ONE_SCORE = 'SET_TEAM_ONE_SCORE';
 const SET_TEAM_TWO_SCORE = 'SET_TEAM_TWO_SCORE';
-const SET_TEAM_ONE_WIN = 'SET_TEAM_ONE_WIN';
+const SET_TEAM_WIN = 'SET_TEAM_WIN';
+const SET_TEAM_LOSE = 'SET_TEAM_LOSE';
+const SET_DRAW_RESULT = 'SET_DRAW_RESULT'
 
 const initialState = {
     teamData: [
-        {
+/*        {
             place: 1,
             team: 'England',
             played: 0,
@@ -18,11 +20,11 @@ const initialState = {
             lost: 0,
             points: 0,
             playedTeams: [],
-        }
+        }*/
     ],
 
     gamesData: [
-        {
+/*        {
             id: 1,
             teamOne: 'Ukraine',
             teamTwo: 'England',
@@ -39,7 +41,7 @@ const initialState = {
             scoreTeamTwo: 0,
             interimScoreTeamOne: null,
             interimScoreTeamTwo: null,
-        }
+        }*/
     ]
 }
 
@@ -108,20 +110,46 @@ const dataReducer = (state = initialState, action) => {
 
             };
 
-
-
-        case SET_TEAM_ONE_WIN:
+        case SET_TEAM_WIN:
             return {
                 ...state,
                 teamData: state.teamData
                     .map((team) => {
-                        if (team.team === action.firsTeam) {
-                            team.scoreTeamTwo = team.interimScoreTeamTwo
+                        if (team.team === action.payload) {
+                            team.played = team.played + 1
+                            team.win = team.win + 1
+                            team.points = team.points + 3
                         }
                         return team
                     })
             };
 
+
+        case SET_TEAM_LOSE:
+            return {
+                ...state,
+                teamData: state.teamData
+                    .map((team) => {
+                        if (team.team === action.payload) {
+                            team.played = team.played + 1
+                            team.lost = team.lost + 1
+                        }
+                        return team
+                    })
+            };
+            case SET_DRAW_RESULT:
+            return {
+                ...state,
+                teamData: state.teamData
+                    .map((team) => {
+                        if (team.team === action.payload) {
+                            team.played = team.played + 1
+                            team.draw = team.draw + 1
+                            team.points = team.points + 1
+                        }
+                        return team
+                    })
+            };
 
         default:
             return state;
@@ -147,25 +175,10 @@ export const updateTeamTwoScoreAC = (id, score) => ({
 export const setTeamOneScoreAC = (payload) => ({type: SET_TEAM_ONE_SCORE, payload});
 export const setTeamTwoScoreAC = (payload) => ({type: SET_TEAM_TWO_SCORE, payload});
 
-export const firstTeamWin = (firsTeam, secondTeam) => (
-    {type: SET_TEAM_ONE_WIN,
-        winTeam : {
-            team: firsTeam,
-            played: 1,
-            win: 1,
-            draw: 0,
-            lost: 0,
-            points: 3,
-        },
-        looseTeam : {
-            team: secondTeam,
-            played: 1,
-            win: 0,
-            draw: 0,
-            lost: 1,
-            points: 0,
-        },
-    })
+export const setTeamWin = (payload) => ({type: SET_TEAM_WIN, payload});
+export const setTeamLose = (payload) => ({type: SET_TEAM_LOSE, payload});
+export const drawResult = (payload) => ({type: SET_DRAW_RESULT, payload});
+
 
 
 export default dataReducer;
